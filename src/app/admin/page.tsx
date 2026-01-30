@@ -31,8 +31,8 @@ export default function AdminLogin() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Demo credentials: admin@clickdown.com / admin123
-    if (email === "admin@clickdown.com" && password === "admin123") {
+    // Demo credentials: admin@clickdown.com / admin1234
+    if (email === "admin@vorce.com" && password === "admin1234") {
       localStorage.setItem("adminLoggedIn", "true");
       router.push("/admin/dashboard");
     } else {

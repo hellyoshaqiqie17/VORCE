@@ -1,0 +1,80 @@
+/* Import Bootstrap */
+@import "./bootstrap.min.css";
+
+/* Import Original Styles */
+@import "./styles.css";
+
+/* Fix font paths for Next.js */
+@font-face {
+  font-family: 'Axiforma';
+  src: url("/assets/fonts/axiforma/Axiforma-Regular.woff2") format("woff2"),
+       url("/assets/fonts/axiforma/Axiforma-Regular.woff") format("woff"),
+       url("/assets/fonts/axiforma/Axiforma-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Axiforma';
+  src: url("/assets/fonts/axiforma/Axiforma-Light.woff2") format("woff2"),
+       url("/assets/fonts/axiforma/Axiforma-Light.woff") format("woff"),
+       url("/assets/fonts/axiforma/Axiforma-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Axiforma';
+  src: url("/assets/fonts/axiforma/Axiforma-Medium.woff2") format("woff2"),
+       url("/assets/fonts/axiforma/Axiforma-Medium.woff") format("woff"),
+       url("/assets/fonts/axiforma/Axiforma-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Axiforma';
+  src: url("/assets/fonts/axiforma/Axiforma-SemiBold.woff2") format("woff2"),
+       url("/assets/fonts/axiforma/Axiforma-SemiBold.woff") format("woff"),
+       url("/assets/fonts/axiforma/Axiforma-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Axiforma';
+  src: url("/assets/fonts/axiforma/Axiforma-Bold.woff2") format("woff2"),
+       url("/assets/fonts/axiforma/Axiforma-Bold.woff") format("woff"),
+       url("/assets/fonts/axiforma/Axiforma-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Axiforma';
+  src: url("/assets/fonts/axiforma/Axiforma-ExtraBold.woff2") format("woff2"),
+       url("/assets/fonts/axiforma/Axiforma-ExtraBold.woff") format("woff"),
+       url("/assets/fonts/axiforma/Axiforma-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+
+/* Override body font to use Montserrat */
+body {
+  font-family: "Montserrat", Arial, sans-serif !important;
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+  font-family: "Montserrat", Arial, sans-serif !important;
+}
+
+/* Additional fixes for Next.js */
+.header-height-fix {
+  height: 80px;
+}
+
+@media (max-width: 991px) {
+  .header-height-fix {
+    height: 70px;
+  }
+}

@@ -1,0 +1,281 @@
+{
+  "header": {
+    "logo": "/assets/uploads/1768209897559_vorce.svg",
+    "title": "Vorce",
+    "menuItems": [
+      {
+        "label": "Product",
+        "link": "#"
+      },
+      {
+        "label": "Learn",
+        "link": "#"
+      },
+      {
+        "label": "Pricing",
+        "link": "#"
+      }
+    ]
+  },
+  "banner": {
+    "title": "Vorce jaya jaya jaya",
+    "subtitle": "All of your work in one place: Tasks, Docs, Chat, Goals, & more.",
+    "image": "/assets/images/banner/banner-image.png",
+    "buttonText": "Get Started"
+  },
+  "features": {
+    "pink": {
+      "tabs": [
+        {
+          "id": "projectAndTasks",
+          "label": "Project & Tasks"
+        },
+        {
+          "id": "chat",
+          "label": "Chat"
+        },
+        {
+          "id": "goals",
+          "label": "Goals"
+        },
+        {
+          "id": "views",
+          "label": "Views"
+        }
+      ],
+      "content": {
+        "projectAndTasks": {
+          "title": "Simplify work and get more done.",
+          "text": "Plan, track, and manage any type of work with project management that flexes to your team's needs.",
+          "video": "",
+          "poster": "",
+          "replaces": [
+            "Asana",
+            "Monday",
+            "Jira"
+          ]
+        },
+        "chat": {
+          "title": "Bring everyone together in Chat.",
+          "text": "Work smarter as a team with real-time chat. Tag individuals or groups, assign comments for action items, and link tasks to get more done together.",
+          "video": "",
+          "poster": "",
+          "replaces": [
+            "Slack",
+            "MS Teams",
+            "Google Hangouts"
+          ]
+        },
+        "goals": {
+          "title": "Set goals and crush them faster.",
+          "text": "Stay on track to hit your goals with targets for task completions, numbers, monetary values and more. Track progress in real-time connecting tasks to goals and keep your objectives organized with Goal Folders.",
+          "video": "",
+          "poster": "",
+          "replaces": [
+            "Lattice",
+            "Gtmhub",
+            "7geese"
+          ]
+        },
+        "views": {
+          "title": "See your work, your way.",
+          "text": "Tackle work from any angle with 20+ real-time views that adapt to your needs. Track tasks on List, update workflows on a Board, drag-and-drop due dates on a Calendar, and so much more.",
+          "video": "",
+          "poster": "/assets/images/videos-poster/features-1d.png",
+          "replaces": [
+            "Monday",
+            "Jira",
+            "Trello"
+          ]
+        }
+      }
+    },
+    "primary": {
+      "tabs": [
+        {
+          "id": "docs",
+          "label": "Docs"
+        },
+        {
+          "id": "whiteboards",
+          "label": "Whiteboards"
+        },
+        {
+          "id": "dashboards",
+          "label": "Dashboards"
+        }
+      ],
+      "content": {
+        "docs": {
+          "title": "The world's most powerful (and fun) Docs.",
+          "video": "",
+          "poster": ""
+        },
+        "whiteboards": {
+          "title": "Bring your ideas to life with Whiteboards.",
+          "video": "",
+          "poster": ""
+        },
+        "dashboards": {
+          "title": "See how you're doing in real-time with Dashboards.",
+          "video": "",
+          "poster": ""
+        }
+      }
+    },
+    "green": {
+      "tabs": [
+        {
+          "id": "import",
+          "label": "Import",
+          "num": "01"
+        },
+        {
+          "id": "download",
+          "label": "Download",
+          "num": "02"
+        },
+        {
+          "id": "clickApps",
+          "label": "ClickApps",
+          "num": "03"
+        },
+        {
+          "id": "integrations",
+          "label": "Integrations",
+          "num": "04"
+        },
+        {
+          "id": "automations",
+          "label": "Automations",
+          "num": "05"
+        }
+      ],
+      "content": {
+        "import": {
+          "title": "Import to the future of work with one click.",
+          "text": "Instantly import your work from other tools automatically. Create a custom import to bring work in from excel or tools that aren't supported.",
+          "video": "",
+          "poster": ""
+        },
+        "download": {
+          "title": "Get more work done, wherever you are.",
+          "text": "Access ClickUp on any device—mobile, desktop, voice assistants, and more to get work done from anywhere.",
+          "video": "",
+          "poster": ""
+        },
+        "clickApps": {
+          "title": "Customize tasks for any need.",
+          "text": "Customize ClickUp to tackle any project or task with 35+ ClickApps. Break down work with subtasks, assign Sprint Points, link tasks to other items with Relationships, and more.",
+          "poster": "/assets/images/features/features-3c.png",
+          "isImage": true
+        },
+        "integrations": {
+          "title": "Bring all of your tools into one place.",
+          "text": "If you're not ready replace all your tools, ClickUp can integrate with them with native and third-party integrations. Sync your team calendars, messaging apps, cloud storage, and more to keep everything in one place.",
+          "poster": "",
+          "isImage": true
+        },
+        "automations": {
+          "title": "Save time by automating your work.",
+          "text": "Eliminate the busywork and focus on what matters with hundreds of Automations. Automatically assign tasks, post comments, update statuses, and sync with other tools.",
+          "poster": "/assets/images/features/features-3e.png",
+          "isImage": true
+        }
+      }
+    },
+    "cyan": {
+      "title": "Built for teams from 1 to 1,000+.",
+      "subtitle": "best support in software",
+      "tabs": [
+        {
+          "id": "projectManagement",
+          "label": "Project Management"
+        },
+        {
+          "id": "engineering",
+          "label": "Engineering"
+        },
+        {
+          "id": "sales",
+          "label": "Sales"
+        },
+        {
+          "id": "marketing",
+          "label": "Marketing"
+        },
+        {
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "id": "design",
+          "label": "Design"
+        },
+        {
+          "id": "finance",
+          "label": "Finance"
+        },
+        {
+          "id": "hr",
+          "label": "HR"
+        },
+        {
+          "id": "it",
+          "label": "IT"
+        }
+      ],
+      "images": {
+        "projectManagement": "/assets/images/features/features-4a.png",
+        "engineering": "/assets/images/features/features-4b.png",
+        "sales": "/assets/images/features/features-4c.png",
+        "marketing": "/assets/images/features/features-4d.png",
+        "product": "/assets/images/features/features-4e.png",
+        "design": "/assets/images/features/features-4f.png",
+        "finance": "/assets/images/features/features-4g.png",
+        "hr": "/assets/images/features/features-4h.png",
+        "it": "/assets/images/features/features-4i.png"
+      }
+    },
+    "purple": {
+      "title": "24/7 real-time support.",
+      "subtitle": "#1 Support in Software",
+      "text": "ClickUp has the highest rated client support in software. We're here 24 hours a day, every day of the week, including holidays.",
+      "image": "/assets/images/help/customer-support.png",
+      "benefits": [
+        "Free coaching",
+        "Daily webinars",
+        "Chat & Phone"
+      ]
+    }
+  },
+  "testimonials": [
+    {
+      "image": "/assets/images/reviews/testimonial-1.png",
+      "video": "https://www.youtube.com/watch?v=f_exDBcGYnM",
+      "text": "We selected ClickUp for its powerful, no code feature set, out-of-the-box organizational visibility, ease-of-use for non-engineers, and forward-thinking approach to project management.",
+      "user": "Leonard DeSouza, Webflow",
+      "logo": "/assets/images/reviews/webflow.svg"
+    },
+    {
+      "image": "/assets/images/reviews/testimonial-2.png",
+      "video": "https://www.youtube.com/watch?v=5ZNiLOi7B80",
+      "text": "ClickUp has become such an integral part of our work! By putting our work on ClickUp and organizing it into Sprints, we made it easy to work across departments without overloading ourselves with meetings and email threads.",
+      "user": "Jakub, Inbound Marketing Team Lead, STX Next",
+      "logo": "/assets/images/reviews/stxnext.svg"
+    },
+    {
+      "image": "/assets/images/reviews/testimonial-3.png",
+      "video": "https://www.youtube.com/watch?v=4HjirZuTD3A",
+      "text": "After using many different methods to create and manage Scrum frameworks, I finally found the most flexible and powerful platform: ClickUp.",
+      "user": "Gabriel Hoffman, Solutions Engineer, Zen Pilot",
+      "logo": "/assets/images/reviews/zenpilot.png"
+    }
+  ],
+  "footer": {
+    "title": "One site to replace them all.",
+    "description": "All of your work in one place: Tasks, Docs, Chat, Goals, & more.",
+    "buttonText": "Free Forever",
+    "copyright": "© 2026 Vorce"
+  }
+}

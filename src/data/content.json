@@ -13,15 +13,16 @@
     "badge": "Platform #1 Manajemen Bisnis di Indonesia",
     "title": "Kelola Seluruh Operasional Bisnis dalam Satu Platform",
     "subtitle": "Dari absensi karyawan hingga pengelolaan aset perusahaan. VORCE menyederhanakan kompleksitas bisnis Anda dengan solusi terintegrasi yang powerful.",
-    "ctaPrimary": "Mulai Gratis",
+    "ctaPrimary": "Mulai dengan Vorce",
+    "ctaPrimaryLink": "https://wa.me/6281234567890?text=Halo%20Vorce,%20saya%20ingin%20memulai%20dengan%20Vorce",
     "ctaSecondary": "Lihat Demo",
     "trustedBy": "Dipercaya oleh 500+ perusahaan di Indonesia"
   },
   "stats": [
-    { "value": "99.8%", "label": "Uptime Terjamin", "icon": "verified" },
-    { "value": "50K+", "label": "Pengguna Aktif", "icon": "people" },
-    { "value": "500+", "label": "Perusahaan", "icon": "business" },
-    { "value": "24/7", "label": "Support Tim", "icon": "support_agent" }
+    { "value": "100%", "label": "Keamanan Data", "icon": "lock" },
+    { "value": "24/7", "label": "Akses Fleksibel", "icon": "devices" },
+    { "value": "All-in-1", "label": "Sistem Terpusat", "icon": "dashboard" },
+    { "value": "No.1", "label": "Layanan Prioritas", "icon": "support_agent" }
   ],
   "solutions": {
     "title": "Solusi Lengkap untuk Setiap Kebutuhan Bisnis",
@@ -91,52 +92,75 @@
     "subtitle": "Pilih paket yang sesuai dengan kebutuhan bisnis Anda",
     "plans": [
       {
-        "name": "Starter",
-        "price": "Gratis",
-        "period": "Selamanya",
-        "description": "Untuk tim kecil yang baru memulai",
+        "name": "Standart",
+        "storage": "50 GB",
+        "userLimit": "1 - 10 Karyawan",
+        "price": "Rp 32.000",
+        "period": "/bulan",
+        "userPrice": "Gratis",
+        "description": "Untuk tim kecil atau startup",
         "features": [
-          "Hingga 10 pengguna",
-          "Attendance & Leave basic",
-          "Task management",
-          "5GB storage",
-          "Email support"
+          "Arsip 50GB/pembelian",
+          "Pembayaran Pasca Bayar",
+          "Transfer Bank",
+          "Template Arsip (Add-on)"
         ],
-        "cta": "Mulai Gratis",
+        "cta": "Mulai Sekarang",
+        "ctaLink": "https://wa.me/6281234567890?text=Halo%20Vorce,%20saya%20tertarik%20dengan%20paket%20Standart",
+        "popular": false
+      },
+      {
+        "name": "Lite",
+        "storage": "100 GB",
+        "userLimit": "11 - 100 Karyawan",
+        "price": "Rp 57.600",
+        "period": "/bulan",
+        "userPrice": "Rp 5.625 /user/bln",
+        "description": "Untuk bisnis yang sedang tumbuh",
+        "features": [
+          "Arsip 100GB/pembelian",
+          "Custom Template Gratis",
+          "Pembayaran Pasca Bayar",
+          "Transfer Bank"
+        ],
+        "cta": "Pilih Lite",
+        "ctaLink": "https://wa.me/6281234567890?text=Halo%20Vorce,%20saya%20tertarik%20dengan%20paket%20Lite",
+        "popular": true
+      },
+      {
+        "name": "Premium",
+        "storage": "200 GB",
+        "userLimit": "101 - 1000 Karyawan",
+        "price": "Rp 108.800",
+        "period": "/bulan",
+        "userPrice": "Rp 5.602 /user/bln",
+        "description": "Untuk perusahaan menengah",
+        "features": [
+          "Arsip 200GB/pembelian",
+          "Custom Template Gratis",
+          "Prioritas Support",
+          "Semua Fitur Lite"
+        ],
+        "cta": "Pilih Premium",
+        "ctaLink": "https://wa.me/6281234567890?text=Halo%20Vorce,%20saya%20tertarik%20dengan%20paket%20Premium",
         "popular": false
       },
       {
         "name": "Professional",
-        "price": "Rp 49.000",
-        "period": "/user/bulan",
-        "description": "Untuk bisnis yang berkembang",
+        "storage": "300 GB",
+        "userLimit": "1001+ Karyawan",
+        "price": "Rp 153.600",
+        "period": "/bulan",
+        "userPrice": "Rp 5.041 /user/bln",
+        "description": "Untuk skala korporasi besar",
         "features": [
-          "Unlimited pengguna",
-          "Semua fitur Starter",
-          "Reimbursement & approval",
-          "Asset tracking",
-          "Team chat",
-          "50GB storage",
-          "Priority support"
-        ],
-        "cta": "Coba 14 Hari Gratis",
-        "popular": true
-      },
-      {
-        "name": "Enterprise",
-        "price": "Custom",
-        "period": "Hubungi kami",
-        "description": "Untuk perusahaan besar",
-        "features": [
-          "Semua fitur Professional",
-          "SSO & SAML",
-          "Custom integrations",
-          "Dedicated account manager",
-          "SLA 99.9% uptime",
-          "On-premise option",
-          "Training & onboarding"
+          "Arsip 300GB/pembelian",
+          "Custom Template Gratis",
+          "Dedicated Account Manager",
+          "API Access"
         ],
         "cta": "Hubungi Sales",
+        "ctaLink": "https://wa.me/6281234567890?text=Halo%20Vorce,%20saya%20tertarik%20dengan%20Enterprise/Professional",
         "popular": false
       }
     ]
@@ -194,6 +218,7 @@
     "title": "Siap Transformasi Bisnis Anda?",
     "subtitle": "Bergabung dengan 500+ perusahaan yang sudah merasakan kemudahan mengelola bisnis dengan VORCE",
     "button": "Mulai Gratis Sekarang",
+    "buttonLink": "https://wa.me/6281234567890?text=Halo%20Vorce,%20saya%20siap%20transformasi%20bisnis",
     "note": "Tidak perlu kartu kredit • Setup 5 menit • Cancel kapan saja"
   },
   "footer": {

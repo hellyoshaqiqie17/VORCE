@@ -12,21 +12,10 @@ export default function AdminLogin() {
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    try {
-      // Check if already logged in
-      const isLoggedIn = localStorage.getItem("adminLoggedIn");
-      if (isLoggedIn === "true") {
-        console.log("Admin login: Already logged in, redirecting to dashboard");
-        router.push("/admin/dashboard");
-      } else {
-        console.log("Admin login: Not logged in, showing login form");
-        setIsChecking(false);
-      }
-    } catch (error) {
-      console.error("Admin login: Error checking auth", error);
-      setIsChecking(false);
-    }
-  }, [router]);
+    // Always clear session when visiting login page to force re-login
+    localStorage.removeItem("adminLoggedIn");
+    setIsChecking(false);
+  }, []);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,21 +48,22 @@ export default function AdminLogin() {
         <div className="login-header">
           <div className="logo">
             <Image 
-              src="/assets/images/logo/logo-mark.svg" 
-              alt="ClickDown Logo" 
-              width={40} 
-              height={40}
+              src="/assets/uploads/1768209897559_vorce.svg" 
+              alt="Vorce Logo" 
+              width={48} 
+              height={48}
+              style={{ objectFit: 'contain' }}
             />
-            <span>ClickDown</span>
+            <span style={{ fontSize: '24px', fontWeight: '800', letterSpacing: '-0.5px' }}>VORCE</span>
           </div>
-          <h1>Admin Panel</h1>
-          <p>Sign in to access the dashboard</p>
+          <h1 style={{ marginTop: '1rem' }}>Admin Panel</h1>
+          <p>Masuk untuk mengakses dashboard</p>
         </div>
 
         {showError && (
           <div className="error-message">
             <span className="material-icons">error</span>
-            Invalid email or password
+            Email atau password salah
           </div>
         )}
 
@@ -86,7 +76,7 @@ export default function AdminLogin() {
                 type="email" 
                 id="email"
                 className="form-control"
-                placeholder="admin@clickdown.com"
+                placeholder="admin@vorce.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required

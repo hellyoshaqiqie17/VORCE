@@ -134,7 +134,7 @@ export default function Home() {
   const ctaAnim = useScrollAnimation();
 
   useEffect(() => {
-    fetch("/api/content")
+    fetch(`/api/content?t=${Date.now()}`)
       .then((res) => res.json())
       .then((data) => setContent(data))
       .catch((err) => console.error("Failed to load content", err));
@@ -268,10 +268,9 @@ export default function Home() {
           <div className="nav-actions">
             <Link href="/admin" className="nav-link-login">
               Masuk
-              <span className="login-arrow">→</span>
             </Link>
-            <a href="#pricing" className="nav-btn-primary">
-              <span>Coba Gratis</span>
+            <a href="https://wa.me/6281234567890?text=Halo%20Vorce,%20saya%20ingin%20coba%20Vorce" className="nav-btn-primary">
+              <span>Coba Vorce</span>
               <div className="btn-shine"></div>
             </a>
           </div>
@@ -308,8 +307,8 @@ export default function Home() {
                 <path d="M2 8 Q75 2 150 6 Q225 10 298 4" stroke="url(#gradient)" strokeWidth="3" fill="none"/>
                 <defs>
                   <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#2563eb"/>
-                    <stop offset="100%" stopColor="#7c3aed"/>
+                    <stop offset="0%" stopColor="#5A30FF"/>
+                    <stop offset="100%" stopColor="#7B5AFF"/>
                   </linearGradient>
                 </defs>
               </svg>
@@ -319,19 +318,13 @@ export default function Home() {
           
           <p className="hero-subtitle animate-on-scroll stagger-3">{content.hero?.subtitle}</p>
 
-          <div className="hero-cta animate-on-scroll stagger-4">
-            <a href="#pricing" className="btn-primary magnetic-btn">
+          <div className="hero-cta animate-on-scroll stagger-4" style={{ justifyContent: 'center' }}>
+            <a href={content.hero?.ctaPrimaryLink} className="btn-primary magnetic-btn">
               <span className="btn-content">
                 <span className="material-icons">rocket_launch</span>
                 {content.hero?.ctaPrimary}
               </span>
               <div className="btn-bg"></div>
-            </a>
-            <a href="#features" className="btn-secondary magnetic-btn">
-              <span className="btn-content">
-                <span className="material-icons">play_circle</span>
-                {content.hero?.ctaSecondary}
-              </span>
             </a>
           </div>
 
@@ -455,95 +448,115 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Floater Element to add depth */}
-            <div className="composition-floater magnetic-card" style={{right: '-30px', top: '100px', transform: 'rotate(5deg)'}}>
-              <div className="admin-card" style={{padding: '12px 16px', display: 'flex', gap: '12px', alignItems: 'center'}}>
-                <div className="admin-icon green" style={{width: 36, height: 36, fontSize: 18}}>
-                  <span className="material-icons">check</span>
+            {/* Floater Cards - Positioned around dashboard */}
+            
+            {/* Top Right - Laporan Disetujui */}
+            <div className="composition-floater magnetic-card" style={{right: '20px', top: '60px', transform: 'rotate(3deg)'}}>
+              <div className="admin-card" style={{padding: '14px 18px', display: 'flex', gap: '12px', alignItems: 'center', minWidth: '200px'}}>
+                <div className="admin-icon green" style={{width: 40, height: 40, fontSize: 20}}>
+                  <span className="material-icons">check_circle</span>
                 </div>
                 <div>
-                  <strong style={{display: 'block', fontSize: '13px', color: 'var(--dark)'}}>Laporan Disetujui</strong>
-                  <span style={{fontSize: '11px', color: 'var(--text-light)'}}>Tepat waktu</span>
+                  <strong style={{display: 'block', fontSize: '14px', color: 'var(--dark)', marginBottom: '2px'}}>Laporan Disetujui</strong>
+                  <span style={{fontSize: '12px', color: 'var(--text-light)'}}>Tepat waktu</span>
                 </div>
               </div>
             </div>
 
-            {/* Additional Interactive Cards */}
-            {/* Reimburse Card */}
-            <div className="composition-floater magnetic-card" style={{left: '-40px', top: '200px', transform: 'rotate(-3deg)'}}>
-              <div className="admin-card" style={{padding: '16px', minWidth: '200px'}}>
-                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px'}}>
-                  <span style={{fontSize: '12px', color: 'var(--text-light)', fontWeight: 600}}>Riwayat Reimburse</span>
-                  <span className="trend-badge positive" style={{fontSize: '11px', padding: '2px 8px', background: '#dcfce7', color: '#166534', borderRadius: '12px', fontWeight: 600}}>↑ 5%</span>
+            {/* Top Left - Reimburse Chart (Featured Light Card) */}
+            <div className="composition-floater magnetic-card" style={{left: '-20px', top: '40px', transform: 'rotate(-2deg)'}}>
+              <div className="admin-card reimburse-featured" style={{
+                padding: '20px', 
+                minWidth: '260px',
+                background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+                border: '1px solid rgba(90, 48, 255, 0.1)',
+                boxShadow: '0 20px 50px rgba(90, 48, 255, 0.15)'
+              }}>
+                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px'}}>
+                  <span style={{fontSize: '13px', color: 'var(--text-light)', fontWeight: 600}}>Riwayat Reimburse</span>
+                  <span className="trend-badge positive" style={{
+                    fontSize: '11px', 
+                    padding: '4px 10px', 
+                    background: '#dcfce7', 
+                    color: '#166534', 
+                    borderRadius: '12px', 
+                    fontWeight: 600,
+                    border: '1px solid #bbf7d0'
+                  }}>↑ 5%</span>
                 </div>
-                <div style={{fontSize: '24px', fontWeight: 700, color: 'var(--dark)', marginBottom: '12px'}}>$9,380</div>
-                <div style={{display: 'flex', gap: '4px', height: '40px', alignItems: 'flex-end'}}>
+                <div style={{fontSize: '32px', fontWeight: 800, color: 'var(--dark)', marginBottom: '16px', letterSpacing: '-0.5px'}}>$9,380</div>
+                <div style={{display: 'flex', gap: '3px', height: '60px', alignItems: 'flex-end', marginBottom: '12px', background: 'var(--gray-50)', padding: '8px', borderRadius: '8px'}}>
                   {[50, 90, 70, 120, 85, 110, 95, 130, 75, 140].map((height, i) => (
                     <div key={i} style={{
                       flex: 1,
                       height: `${(height / 140) * 100}%`,
                       background: i % 4 === 0 ? '#3b82f6' : i % 4 === 1 ? '#f97316' : i % 4 === 2 ? '#ec4899' : '#22c55e',
-                      borderRadius: '2px 2px 0 0',
-                      transition: 'all 0.3s ease'
+                      borderRadius: '3px 3px 0 0',
+                      transition: 'all 0.3s ease',
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
                     }}></div>
                   ))}
                 </div>
-                <div style={{display: 'flex', gap: '8px', marginTop: '8px', fontSize: '10px'}}>
-                  <div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
+                <div style={{display: 'flex', gap: '12px', fontSize: '11px', flexWrap: 'wrap'}}>
+                  <div style={{display: 'flex', alignItems: 'center', gap: '5px'}}>
                     <div style={{width: 8, height: 8, borderRadius: '50%', background: '#3b82f6'}}></div>
-                    <span style={{color: 'var(--text-light)'}}>Transportasi</span>
+                    <span style={{color: 'var(--text-light)'}}>Transport</span>
                   </div>
-                  <div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
+                  <div style={{display: 'flex', alignItems: 'center', gap: '5px'}}>
                     <div style={{width: 8, height: 8, borderRadius: '50%', background: '#f97316'}}></div>
                     <span style={{color: 'var(--text-light)'}}>Makan</span>
                   </div>
+                  <div style={{display: 'flex', alignItems: 'center', gap: '5px'}}>
+                    <div style={{width: 8, height: 8, borderRadius: '50%', background: '#ec4899'}}></div>
+                    <span style={{color: 'var(--text-light)'}}>Kesehatan</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Category Cards Grid */}
-            <div className="composition-floater magnetic-card" style={{right: '-50px', bottom: '80px', transform: 'rotate(2deg)'}}>
-              <div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px'}}>
-                <div className="admin-card hover-lift" style={{padding: '12px', textAlign: 'center', minWidth: '90px'}}>
-                  <div style={{width: 32, height: 32, borderRadius: '8px', background: '#dbeafe', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 6px'}}>
-                    <span className="material-icons" style={{fontSize: 18, color: '#3b82f6'}}>directions_car</span>
+            {/* Right Bottom - Category Cards Grid */}
+            <div className="composition-floater magnetic-card" style={{right: '30px', bottom: '100px', transform: 'rotate(1deg)'}}>
+              <div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px'}}>
+                <div className="admin-card hover-lift" style={{padding: '14px', textAlign: 'center', minWidth: '100px'}}>
+                  <div style={{width: 36, height: 36, borderRadius: '10px', background: '#dbeafe', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px'}}>
+                    <span className="material-icons" style={{fontSize: 20, color: '#3b82f6'}}>directions_car</span>
                   </div>
-                  <div style={{fontSize: '16px', fontWeight: 700, color: 'var(--dark)'}}>$840</div>
-                  <div style={{fontSize: '10px', color: 'var(--text-light)', marginTop: '2px'}}>Transportasi</div>
+                  <div style={{fontSize: '18px', fontWeight: 700, color: 'var(--dark)'}}>$840</div>
+                  <div style={{fontSize: '11px', color: 'var(--text-light)', marginTop: '4px'}}>Transportasi</div>
                 </div>
-                <div className="admin-card hover-lift" style={{padding: '12px', textAlign: 'center', minWidth: '90px'}}>
-                  <div style={{width: 32, height: 32, borderRadius: '8px', background: '#ffedd5', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 6px'}}>
-                    <span className="material-icons" style={{fontSize: 18, color: '#f97316'}}>restaurant</span>
+                <div className="admin-card hover-lift" style={{padding: '14px', textAlign: 'center', minWidth: '100px'}}>
+                  <div style={{width: 36, height: 36, borderRadius: '10px', background: '#ffedd5', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px'}}>
+                    <span className="material-icons" style={{fontSize: 20, color: '#f97316'}}>restaurant</span>
                   </div>
-                  <div style={{fontSize: '16px', fontWeight: 700, color: 'var(--dark)'}}>$1,160</div>
-                  <div style={{fontSize: '10px', color: 'var(--text-light)', marginTop: '2px'}}>Makan</div>
+                  <div style={{fontSize: '18px', fontWeight: 700, color: 'var(--dark)'}}>$1,160</div>
+                  <div style={{fontSize: '11px', color: 'var(--text-light)', marginTop: '4px'}}>Makan</div>
                 </div>
-                <div className="admin-card hover-lift" style={{padding: '12px', textAlign: 'center', minWidth: '90px'}}>
-                  <div style={{width: 32, height: 32, borderRadius: '8px', background: '#fce7f3', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 6px'}}>
-                    <span className="material-icons" style={{fontSize: 18, color: '#ec4899'}}>local_hospital</span>
+                <div className="admin-card hover-lift" style={{padding: '14px', textAlign: 'center', minWidth: '100px'}}>
+                  <div style={{width: 36, height: 36, borderRadius: '10px', background: '#fce7f3', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px'}}>
+                    <span className="material-icons" style={{fontSize: 20, color: '#ec4899'}}>local_hospital</span>
                   </div>
-                  <div style={{fontSize: '16px', fontWeight: 700, color: 'var(--dark)'}}>$2,800</div>
-                  <div style={{fontSize: '10px', color: 'var(--text-light)', marginTop: '2px'}}>Kesehatan</div>
+                  <div style={{fontSize: '18px', fontWeight: 700, color: 'var(--dark)'}}>$2,800</div>
+                  <div style={{fontSize: '11px', color: 'var(--text-light)', marginTop: '4px'}}>Kesehatan</div>
                 </div>
-                <div className="admin-card hover-lift" style={{padding: '12px', textAlign: 'center', minWidth: '90px'}}>
-                  <div style={{width: 32, height: 32, borderRadius: '8px', background: '#dcfce7', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 6px'}}>
-                    <span className="material-icons" style={{fontSize: 18, color: '#22c55e'}}>more_horiz</span>
+                <div className="admin-card hover-lift" style={{padding: '14px', textAlign: 'center', minWidth: '100px'}}>
+                  <div style={{width: 36, height: 36, borderRadius: '10px', background: '#dcfce7', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px'}}>
+                    <span className="material-icons" style={{fontSize: 20, color: '#22c55e'}}>more_horiz</span>
                   </div>
-                  <div style={{fontSize: '16px', fontWeight: 700, color: 'var(--dark)'}}>$580</div>
-                  <div style={{fontSize: '10px', color: 'var(--text-light)', marginTop: '2px'}}>Lainnya</div>
+                  <div style={{fontSize: '18px', fontWeight: 700, color: 'var(--dark)'}}>$580</div>
+                  <div style={{fontSize: '11px', color: 'var(--text-light)', marginTop: '4px'}}>Lainnya</div>
                 </div>
               </div>
             </div>
 
-            {/* Notification Card */}
-            <div className="composition-floater magnetic-card" style={{left: '-35px', bottom: '120px', transform: 'rotate(-5deg)'}}>
-              <div className="admin-card" style={{padding: '12px 14px', display: 'flex', gap: '10px', alignItems: 'center', maxWidth: '220px'}}>
-                <div style={{width: 32, height: 32, borderRadius: '8px', background: '#fef3c7', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0}}>
-                  <span className="material-icons" style={{fontSize: 18, color: '#f59e0b'}}>notifications_active</span>
+            {/* Left Bottom - Notification Card */}
+            <div className="composition-floater magnetic-card" style={{left: '30px', bottom: '140px', transform: 'rotate(-3deg)'}}>
+              <div className="admin-card" style={{padding: '14px 16px', display: 'flex', gap: '12px', alignItems: 'center', maxWidth: '240px'}}>
+                <div style={{width: 40, height: 40, borderRadius: '10px', background: '#fef3c7', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0}}>
+                  <span className="material-icons" style={{fontSize: 22, color: '#f59e0b'}}>notifications_active</span>
                 </div>
                 <div>
-                  <strong style={{display: 'block', fontSize: '12px', color: 'var(--dark)'}}>5 Tugas Baru</strong>
-                  <span style={{fontSize: '10px', color: 'var(--text-light)'}}>Perlu ditinjau hari ini</span>
+                  <strong style={{display: 'block', fontSize: '13px', color: 'var(--dark)', marginBottom: '2px'}}>5 Tugas Baru</strong>
+                  <span style={{fontSize: '11px', color: 'var(--text-light)'}}>Perlu ditinjau hari ini</span>
                 </div>
               </div>
             </div>
@@ -675,11 +688,54 @@ export default function Home() {
                 )}
                 <div className="pricing-header">
                   <h3 className="plan-name">{plan.name}</h3>
-                  <p className="plan-desc">{plan.description}</p>
-                  <div className="plan-price">
-                    <span className="price">{plan.price}</span>
-                    <span className="period">{plan.period}</span>
+                  
+                  {/* Highlighted Storage & User Limit Badge */}
+                  <div className="plan-badge-container" style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '24px' }}>
+                    <div style={{ 
+                      display: 'inline-block',
+                      background: plan.popular ? 'rgba(255,255,255,0.2)' : '#e0e7ff',
+                      color: plan.popular ? 'white' : 'var(--primary)',
+                      padding: '4px 12px',
+                      borderRadius: '6px',
+                      fontSize: '14px',
+                      fontWeight: '700',
+                      width: 'fit-content'
+                    }}>
+                      {plan.storage}
+                    </div>
+                    <div style={{ 
+                      fontSize: '12px', 
+                      fontWeight: '600', 
+                      color: plan.popular ? '#cbd5e1' : '#64748b',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
+                    }}>
+                      {plan.userLimit}
+                    </div>
                   </div>
+
+                  {/* Main Price: Biaya Storage */}
+                  <div style={{ marginBottom: '16px' }}>
+                    <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', color: plan.popular ? '#94a3b8' : '#94a3b8', fontWeight: '600', marginBottom: '4px' }}>
+                      Biaya Storage
+                    </div>
+                    <div className="plan-price">
+                      <span className="price" style={{ fontSize: '28px' }}>{plan.price}</span>
+                      <span className="period" style={{ fontSize: '13px' }}>{plan.period}</span>
+                    </div>
+                  </div>
+
+                  {/* Secondary Price: Biaya Karyawan */}
+                  <div style={{ marginBottom: '20px', paddingTop: '12px', borderTop: plan.popular ? '1px solid rgba(255,255,255,0.1)' : '1px solid var(--gray-100)' }}>
+                    <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '1px', color: plan.popular ? '#94a3b8' : '#94a3b8', fontWeight: '600', marginBottom: '2px' }}>
+                      Biaya Karyawan
+                    </div>
+                    <div style={{ fontSize: '16px', fontWeight: '700', color: plan.popular ? 'white' : 'var(--dark)' }}>
+                      {plan.userPrice}
+                    </div>
+                  </div>
+
+                  <p className="plan-desc" style={{ fontSize: '13px', lineHeight: '1.5' }}>{plan.description}</p>
                 </div>
                 <ul className="plan-features">
                   {plan.features?.map((feature: string, i: number) => (
@@ -689,10 +745,10 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <button className={`plan-cta ${plan.popular ? 'primary' : 'secondary'}`}>
+                <a href={plan.ctaLink} className={`plan-cta ${plan.popular ? 'primary' : 'secondary'}`}>
                   <span>{plan.cta}</span>
                   <span className="material-icons">arrow_forward</span>
-                </button>
+                </a>
               </div>
             ))}
           </div>
@@ -756,9 +812,8 @@ export default function Home() {
             {content.faq?.items?.map((item: any, index: number) => (
               <div 
                 key={index} 
-                className={`faq-item ${openFaq === index ? 'active' : ''} animate-on-scroll from-left`}
+                className={`faq-item ${openFaq === index ? 'active' : ''}`}
                 onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <div className="faq-question">
                   <span className="faq-number">0{index + 1}</span>
@@ -787,7 +842,7 @@ export default function Home() {
         <div className="cta-container">
           <h2 className="cta-title animate-on-scroll scale">{content.cta?.title}</h2>
           <p className="cta-subtitle animate-on-scroll scale" style={{transitionDelay: '100ms'}}>{content.cta?.subtitle}</p>
-          <a href="#pricing" className="cta-button animate-on-scroll scale" style={{transitionDelay: '200ms'}}>
+          <a href={content.cta?.buttonLink} className="cta-button animate-on-scroll scale" style={{transitionDelay: '200ms'}}>
             <span className="material-icons">rocket_launch</span>
             <span>{content.cta?.button}</span>
             <div className="btn-particles">

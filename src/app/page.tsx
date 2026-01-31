@@ -188,6 +188,19 @@ export default function Home() {
     }, 100);
 
     // Scroll Animation Observer
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("mousemove", handleMouseMove);
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
+  // Separate effect for scroll animations that depends on content being loaded
+  useEffect(() => {
+    if (!content) return;
+
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -201,21 +214,20 @@ export default function Home() {
       rootMargin: '0px 0px -50px 0px'
     });
 
-    // Observe all elements with animate-on-scroll class
-    setTimeout(() => {
+    // Small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
       document.querySelectorAll('.animate-on-scroll').forEach((el) => {
         observer.observe(el);
       });
     }, 100);
 
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("mousemove", handleMouseMove);
-    
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("mousemove", handleMouseMove);
+      observer.disconnect();
+      clearTimeout(timer);
     };
-  }, []);
+  }, [content]);
+
+
 
   if (!content) {
     return (

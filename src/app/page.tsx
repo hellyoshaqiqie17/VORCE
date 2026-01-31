@@ -145,7 +145,47 @@ export default function Home() {
 
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
+
+      // Magnetic card effect
+      const magneticCards = document.querySelectorAll('.magnetic-card');
+      magneticCards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const cardCenterX = rect.left + rect.width / 2;
+        const cardCenterY = rect.top + rect.height / 2;
+        
+        const distanceX = e.clientX - cardCenterX;
+        const distanceY = e.clientY - cardCenterY;
+        const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+        
+        // Only apply effect if cursor is within 200px
+        if (distance < 200) {
+          const strength = (200 - distance) / 200;
+          const moveX = (distanceX / distance) * strength * 15;
+          const moveY = (distanceY / distance) * strength * 15;
+          const rotateX = (distanceY / distance) * strength * 5;
+          const rotateY = -(distanceX / distance) * strength * 5;
+          
+          (card as HTMLElement).style.transform = `
+            translate(${moveX}px, ${moveY}px) 
+            rotateX(${rotateX}deg) 
+            rotateY(${rotateY}deg)
+            scale(${1 + strength * 0.05})
+          `;
+        } else {
+          // Reset to original position
+          const originalTransform = card.getAttribute('data-original-transform') || '';
+          (card as HTMLElement).style.transform = originalTransform;
+        }
+      });
     };
+
+    // Store original transforms
+    setTimeout(() => {
+      document.querySelectorAll('.magnetic-card').forEach((card) => {
+        const style = window.getComputedStyle(card);
+        card.setAttribute('data-original-transform', style.transform);
+      });
+    }, 100);
 
     // Scroll Animation Observer
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
@@ -416,7 +456,7 @@ export default function Home() {
             </div>
 
             {/* Floater Element to add depth */}
-            <div className="composition-floater" style={{right: '-30px', top: '100px', transform: 'rotate(5deg)'}}>
+            <div className="composition-floater magnetic-card" style={{right: '-30px', top: '100px', transform: 'rotate(5deg)'}}>
               <div className="admin-card" style={{padding: '12px 16px', display: 'flex', gap: '12px', alignItems: 'center'}}>
                 <div className="admin-icon green" style={{width: 36, height: 36, fontSize: 18}}>
                   <span className="material-icons">check</span>
@@ -424,6 +464,86 @@ export default function Home() {
                 <div>
                   <strong style={{display: 'block', fontSize: '13px', color: 'var(--dark)'}}>Laporan Disetujui</strong>
                   <span style={{fontSize: '11px', color: 'var(--text-light)'}}>Tepat waktu</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Additional Interactive Cards */}
+            {/* Reimburse Card */}
+            <div className="composition-floater magnetic-card" style={{left: '-40px', top: '200px', transform: 'rotate(-3deg)'}}>
+              <div className="admin-card" style={{padding: '16px', minWidth: '200px'}}>
+                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px'}}>
+                  <span style={{fontSize: '12px', color: 'var(--text-light)', fontWeight: 600}}>Riwayat Reimburse</span>
+                  <span className="trend-badge positive" style={{fontSize: '11px', padding: '2px 8px', background: '#dcfce7', color: '#166534', borderRadius: '12px', fontWeight: 600}}>↑ 5%</span>
+                </div>
+                <div style={{fontSize: '24px', fontWeight: 700, color: 'var(--dark)', marginBottom: '12px'}}>$9,380</div>
+                <div style={{display: 'flex', gap: '4px', height: '40px', alignItems: 'flex-end'}}>
+                  {[50, 90, 70, 120, 85, 110, 95, 130, 75, 140].map((height, i) => (
+                    <div key={i} style={{
+                      flex: 1,
+                      height: `${(height / 140) * 100}%`,
+                      background: i % 4 === 0 ? '#3b82f6' : i % 4 === 1 ? '#f97316' : i % 4 === 2 ? '#ec4899' : '#22c55e',
+                      borderRadius: '2px 2px 0 0',
+                      transition: 'all 0.3s ease'
+                    }}></div>
+                  ))}
+                </div>
+                <div style={{display: 'flex', gap: '8px', marginTop: '8px', fontSize: '10px'}}>
+                  <div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
+                    <div style={{width: 8, height: 8, borderRadius: '50%', background: '#3b82f6'}}></div>
+                    <span style={{color: 'var(--text-light)'}}>Transportasi</span>
+                  </div>
+                  <div style={{display: 'flex', alignItems: 'center', gap: '4px'}}>
+                    <div style={{width: 8, height: 8, borderRadius: '50%', background: '#f97316'}}></div>
+                    <span style={{color: 'var(--text-light)'}}>Makan</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Category Cards Grid */}
+            <div className="composition-floater magnetic-card" style={{right: '-50px', bottom: '80px', transform: 'rotate(2deg)'}}>
+              <div style={{display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px'}}>
+                <div className="admin-card hover-lift" style={{padding: '12px', textAlign: 'center', minWidth: '90px'}}>
+                  <div style={{width: 32, height: 32, borderRadius: '8px', background: '#dbeafe', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 6px'}}>
+                    <span className="material-icons" style={{fontSize: 18, color: '#3b82f6'}}>directions_car</span>
+                  </div>
+                  <div style={{fontSize: '16px', fontWeight: 700, color: 'var(--dark)'}}>$840</div>
+                  <div style={{fontSize: '10px', color: 'var(--text-light)', marginTop: '2px'}}>Transportasi</div>
+                </div>
+                <div className="admin-card hover-lift" style={{padding: '12px', textAlign: 'center', minWidth: '90px'}}>
+                  <div style={{width: 32, height: 32, borderRadius: '8px', background: '#ffedd5', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 6px'}}>
+                    <span className="material-icons" style={{fontSize: 18, color: '#f97316'}}>restaurant</span>
+                  </div>
+                  <div style={{fontSize: '16px', fontWeight: 700, color: 'var(--dark)'}}>$1,160</div>
+                  <div style={{fontSize: '10px', color: 'var(--text-light)', marginTop: '2px'}}>Makan</div>
+                </div>
+                <div className="admin-card hover-lift" style={{padding: '12px', textAlign: 'center', minWidth: '90px'}}>
+                  <div style={{width: 32, height: 32, borderRadius: '8px', background: '#fce7f3', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 6px'}}>
+                    <span className="material-icons" style={{fontSize: 18, color: '#ec4899'}}>local_hospital</span>
+                  </div>
+                  <div style={{fontSize: '16px', fontWeight: 700, color: 'var(--dark)'}}>$2,800</div>
+                  <div style={{fontSize: '10px', color: 'var(--text-light)', marginTop: '2px'}}>Kesehatan</div>
+                </div>
+                <div className="admin-card hover-lift" style={{padding: '12px', textAlign: 'center', minWidth: '90px'}}>
+                  <div style={{width: 32, height: 32, borderRadius: '8px', background: '#dcfce7', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 6px'}}>
+                    <span className="material-icons" style={{fontSize: 18, color: '#22c55e'}}>more_horiz</span>
+                  </div>
+                  <div style={{fontSize: '16px', fontWeight: 700, color: 'var(--dark)'}}>$580</div>
+                  <div style={{fontSize: '10px', color: 'var(--text-light)', marginTop: '2px'}}>Lainnya</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Notification Card */}
+            <div className="composition-floater magnetic-card" style={{left: '-35px', bottom: '120px', transform: 'rotate(-5deg)'}}>
+              <div className="admin-card" style={{padding: '12px 14px', display: 'flex', gap: '10px', alignItems: 'center', maxWidth: '220px'}}>
+                <div style={{width: 32, height: 32, borderRadius: '8px', background: '#fef3c7', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0}}>
+                  <span className="material-icons" style={{fontSize: 18, color: '#f59e0b'}}>notifications_active</span>
+                </div>
+                <div>
+                  <strong style={{display: 'block', fontSize: '12px', color: 'var(--dark)'}}>5 Tugas Baru</strong>
+                  <span style={{fontSize: '10px', color: 'var(--text-light)'}}>Perlu ditinjau hari ini</span>
                 </div>
               </div>
             </div>

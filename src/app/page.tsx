@@ -1,91 +1,750 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Header from "@/components/Header/Header";
-import Banner from "@/components/Banner/Banner";
-import JoinCompanies from "@/components/JoinCompanies/JoinCompanies";
-import FeaturesPink from "@/components/Features/FeaturesPink";
-import FeaturesPrimary from "@/components/Features/FeaturesPrimary";
-import FeaturesGreen from "@/components/Features/FeaturesGreen";
-import FeaturesCyan from "@/components/Features/FeaturesCyan";
-import FeaturesPurple from "@/components/Features/FeaturesPurple";
-import Testimonial from "@/components/Testimonial/Testimonial";
-import Footer from "@/components/Footer/Footer";
-import ContactModal from "@/components/Modals/ContactModal";
-import SignUpModal from "@/components/Modals/SignUpModal";
-import WhatsAppButton from "@/components/WhatsAppButton/WhatsAppButton";
-import ScrollToTop from "@/components/ScrollToTop/ScrollToTop";
+import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import AnimatedPhone from "@/components/AnimatedPhone";
+import "./landing.css";
+
+interface ContentData {
+  hero: any;
+  stats: any[];
+  solutions: any;
+  benefits: any;
+  pricing: any;
+  testimonials: any[];
+  faq: any;
+  cta: any;
+  footer: any;
+}
+
+// Custom hook for scroll animations
+function useScrollAnimation() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  return { ref, isVisible };
+}
+
+// Animated counter component
+function AnimatedCounter({ end, duration = 2000, suffix = "" }: { end: string; duration?: number; suffix?: string }) {
+  const [count, setCount] = useState("0");
+  const ref = useRef<HTMLDivElement>(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          
+          // Parse the end value
+          const numericPart = end.replace(/[^0-9.]/g, '');
+          const numericEnd = parseFloat(numericPart) || 0;
+          const prefix = end.match(/^[^0-9]*/)?.[0] || '';
+          const endSuffix = end.match(/[^0-9]*$/)?.[0] || '';
+          
+          const startTime = Date.now();
+          const animate = () => {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            // Easing function
+            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+            const current = numericEnd * easeOutQuart;
+            
+            if (numericEnd % 1 === 0) {
+              setCount(prefix + Math.floor(current) + endSuffix);
+            } else {
+              setCount(prefix + current.toFixed(1) + endSuffix);
+            }
+            
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            } else {
+              setCount(end);
+            }
+          };
+          
+          animate();
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [end, duration, hasAnimated]);
+
+  return <div ref={ref}>{count}{suffix}</div>;
+}
+
+// Scroll progress indicator
+function ScrollProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollProgress = (window.scrollY / totalHeight) * 100;
+      setProgress(scrollProgress);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return <div className="scroll-progress" style={{ width: `${progress}%` }} />;
+}
 
 export default function Home() {
-  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
-  const [content, setContent] = useState<any>(null);
+  const [content, setContent] = useState<ContentData | null>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  // Section animations
+  const heroAnim = useScrollAnimation();
+  const statsAnim = useScrollAnimation();
+  const solutionsAnim = useScrollAnimation();
+  const benefitsAnim = useScrollAnimation();
+  const pricingAnim = useScrollAnimation();
+  const testimonialsAnim = useScrollAnimation();
+  const faqAnim = useScrollAnimation();
+  const ctaAnim = useScrollAnimation();
 
   useEffect(() => {
     fetch("/api/content")
       .then((res) => res.json())
       .then((data) => setContent(data))
       .catch((err) => console.error("Failed to load content", err));
+
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    // Scroll Animation Observer
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    // Observe all elements with animate-on-scroll class
+    setTimeout(() => {
+      document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+        observer.observe(el);
+      });
+    }, 100);
+
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("mousemove", handleMouseMove);
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
   }, []);
 
-  const openContactModal = () => setIsContactModalOpen(true);
-  const closeContactModal = () => setIsContactModalOpen(false);
-  const openSignUpModal = () => setIsSignUpModalOpen(true);
-  const closeSignUpModal = () => setIsSignUpModalOpen(false);
+  if (!content) {
+    return (
+      <div className="loading-screen">
+        <div className="loader-container">
+          <div className="loader-ring"></div>
+          <div className="loader-ring"></div>
+          <div className="loader-ring"></div>
+          <span className="loader-text">VORCE</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <>
-      {/* Header & Banner Wrapper Section */}
-      <div className="banner-wrapper position-relative overflow-hidden">
-        <Header 
-          onContactClick={openContactModal} 
-          onSignUpClick={openSignUpModal}
-          content={content?.header}
-        />
-        <Banner 
-          onSignUpClick={openSignUpModal} 
-          content={content?.banner}
-        />
-        <JoinCompanies />
-      </div>
-
-      {/* Features Sections */}
-      <FeaturesPink 
-        onSignUpClick={openSignUpModal} 
-        content={content?.features?.pink}
-      />
-      <FeaturesPrimary 
-        onSignUpClick={openSignUpModal} 
-        content={content?.features?.primary}
-      />
-      <FeaturesGreen 
-        onSignUpClick={openSignUpModal} 
-        content={content?.features?.green}
-      />
-      <FeaturesCyan 
-        onSignUpClick={openSignUpModal} 
-        content={content?.features?.cyan}
+    <div className="landing-page">
+      <ScrollProgress />
+      
+      {/* Animated Background Gradient */}
+      <div 
+        className="cursor-glow"
+        style={{
+          left: mousePosition.x - 200,
+          top: mousePosition.y - 200,
+        }}
       />
 
-      {/* Testimonial Section */}
-      <Testimonial content={content?.testimonials} />
+      {/* Navigation */}
+      <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
+        <div className="nav-container">
+          <Link href="/" className="nav-logo">
+            <div className="logo-container" style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                <rect width="40" height="40" rx="10" fill="#6366f1"/>
+                <path d="M13.5 15L19.5 27L26.5 19" stroke="white" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle cx="29" cy="13.5" r="4" fill="#f97316"/>
+              </svg>
+              <span className="logo-text" style={{fontSize: '24px', fontWeight: '800', letterSpacing: '-0.5px', color: 'var(--dark)'}}>Vorce</span>
+            </div>
+          </Link>
+          
+          <div className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
+            <a href="#features" className="nav-link">Fitur</a>
+            <a href="#pricing" className="nav-link">Harga</a>
+            <a href="#testimonials" className="nav-link">Testimoni</a>
+            <a href="#faq" className="nav-link">FAQ</a>
+          </div>
 
-      {/* Support Section */}
-      <FeaturesPurple content={content?.features?.purple} />
+          <div className="nav-actions">
+            <Link href="/admin" className="nav-link-login">
+              Masuk
+              <span className="login-arrow">→</span>
+            </Link>
+            <a href="#pricing" className="nav-btn-primary">
+              <span>Coba Gratis</span>
+              <div className="btn-shine"></div>
+            </a>
+          </div>
+
+          <button className="nav-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <span className={`hamburger ${isMenuOpen ? 'active' : ''}`}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="hero">
+        <div className="hero-bg-elements">
+          <div className="hero-blob blob-1"></div>
+          <div className="hero-blob blob-2"></div>
+          <div className="hero-grid"></div>
+        </div>
+
+        <div className="hero-container">
+          <div className="hero-badge animate-on-scroll stagger-1">
+            <span className="badge-dot"></span>
+            <span>{content.hero?.badge}</span>
+          </div>
+          
+          <h1 className="hero-title animate-on-scroll stagger-2">
+            <span className="title-line">Kelola Seluruh</span>
+            <span className="title-line highlight-wrapper">
+              <span className="highlight">Operasional Bisnis</span>
+              <svg className="highlight-underline" viewBox="0 0 300 12">
+                <path d="M2 8 Q75 2 150 6 Q225 10 298 4" stroke="url(#gradient)" strokeWidth="3" fill="none"/>
+                <defs>
+                  <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#2563eb"/>
+                    <stop offset="100%" stopColor="#7c3aed"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </span>
+            <span className="title-line">dalam Satu Platform</span>
+          </h1>
+          
+          <p className="hero-subtitle animate-on-scroll stagger-3">{content.hero?.subtitle}</p>
+
+          <div className="hero-cta animate-on-scroll stagger-4">
+            <a href="#pricing" className="btn-primary magnetic-btn">
+              <span className="btn-content">
+                <span className="material-icons">rocket_launch</span>
+                {content.hero?.ctaPrimary}
+              </span>
+              <div className="btn-bg"></div>
+            </a>
+            <a href="#features" className="btn-secondary magnetic-btn">
+              <span className="btn-content">
+                <span className="material-icons">play_circle</span>
+                {content.hero?.ctaSecondary}
+              </span>
+            </a>
+          </div>
+
+          <div className="hero-trust animate-on-scroll stagger-5">
+            <div className="trust-avatars">
+              <div className="avatar">JK</div>
+              <div className="avatar">AS</div>
+              <div className="avatar">RW</div>
+              <div className="avatar">+</div>
+            </div>
+            <p>{content.hero?.trustedBy}</p>
+          </div>
+
+          {/* Admin UI Composition */}
+          <div className="admin-ui-composition animate-on-scroll scale">
+            <div className="composition-main">
+              {/* Header with Search */}
+              <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '20px', alignItems: 'center'}}>
+                <div>
+                  <h3 style={{fontSize: '18px', fontWeight: 700, margin: 0, color: 'var(--dark)'}}>Dashboard Tim</h3>
+                  <p style={{fontSize: '13px', color: 'var(--text-light)', margin: 0}}>Ringkasan aktivitas hari ini</p>
+                </div>
+                <div style={{display: 'flex', gap: '10px'}}>
+                  <div style={{background: 'white', padding: '8px 12px', borderRadius: '8px', border: '1px solid var(--gray-100)', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-light)'}}>
+                    <span className="material-icons" style={{fontSize: '16px'}}>search</span>
+                    Cari...
+                  </div>
+                  <div className="avatar" style={{width: 32, height: 32, fontSize: 12}}>JD</div>
+                </div>
+              </div>
+
+              {/* Stats Row */}
+              <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '24px'}}>
+                <div className="admin-card admin-stat-card">
+                  <div className="admin-icon blue">
+                    <span className="material-icons">people</span>
+                  </div>
+                  <div className="admin-stat-info">
+                    <span className="label">Hadir Hari Ini</span>
+                    <div className="value">24<span>/30</span></div>
+                  </div>
+                </div>
+                <div className="admin-card admin-stat-card">
+                  <div className="admin-icon orange">
+                    <span className="material-icons">assignment</span>
+                  </div>
+                  <div className="admin-stat-info">
+                    <span className="label">Tugas Pending</span>
+                    <div className="value">12</div>
+                  </div>
+                </div>
+                <div className="admin-card admin-stat-card">
+                  <div className="admin-icon green">
+                    <span className="material-icons">receipt_long</span>
+                  </div>
+                  <div className="admin-stat-info">
+                    <span className="label">Reimburse</span>
+                    <div className="value">IDR 12.5jt</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Content Grid */}
+              <div style={{display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '16px'}}>
+                {/* Activity Feed */}
+                <div className="admin-card" style={{padding: '16px'}}>
+                  <h4 style={{fontSize: '14px', margin: '0 0 12px 0', color: 'var(--dark)'}}>Aktivitas Terbaru</h4>
+                  <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
+                    <div className="admin-activity-item">
+                      <div className="admin-activity-icon" style={{background: '#eff6ff', color: '#3b82f6'}}>
+                        <span className="material-icons" style={{fontSize: 18}}>person_add</span>
+                      </div>
+                      <div className="admin-activity-content">
+                        <p><strong>Jane Doe</strong> bergabung ke tim</p>
+                      </div>
+                      <span className="admin-activity-time">Baru saja</span>
+                    </div>
+                    <div className="admin-activity-item">
+                      <div className="admin-activity-icon" style={{background: '#f0fdf4', color: '#22c55e'}}>
+                        <span className="material-icons" style={{fontSize: 18}}>check_circle</span>
+                      </div>
+                      <div className="admin-activity-content">
+                        <p><strong>Project Alpha</strong> selesai</p>
+                      </div>
+                      <span className="admin-activity-time">5m</span>
+                    </div>
+                    <div className="admin-activity-item">
+                      <div className="admin-activity-icon" style={{background: '#fff7ed', color: '#f97316'}}>
+                        <span className="material-icons" style={{fontSize: 18}}>assignment</span>
+                      </div>
+                      <div className="admin-activity-content">
+                        <p><strong>5 Tugas</strong> diperbarui</p>
+                      </div>
+                      <span className="admin-activity-time">12m</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Quick Actions */}
+                <div className="admin-card" style={{padding: '16px'}}>
+                   <h4 style={{fontSize: '14px', margin: '0 0 12px 0', color: 'var(--dark)'}}>Akses Cepat</h4>
+                   <div className="admin-quick-grid">
+                     <div className="admin-quick-card">
+                       <span className="material-icons" style={{color: '#f97316'}}>assignment</span>
+                       <span>Tugas</span>
+                     </div>
+                     <div className="admin-quick-card">
+                       <span className="material-icons" style={{color: '#22c55e'}}>receipt_long</span>
+                       <span>Klaim</span>
+                     </div>
+                     <div className="admin-quick-card">
+                       <span className="material-icons" style={{color: '#3b82f6'}}>event_available</span>
+                       <span>Izin</span>
+                     </div>
+                     <div className="admin-quick-card">
+                       <span className="material-icons" style={{color: '#a855f7'}}>insert_chart</span>
+                       <span>Laporan</span>
+                     </div>
+                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Floater Element to add depth */}
+            <div className="composition-floater" style={{right: '-30px', top: '100px', transform: 'rotate(5deg)'}}>
+              <div className="admin-card" style={{padding: '12px 16px', display: 'flex', gap: '12px', alignItems: 'center'}}>
+                <div className="admin-icon green" style={{width: 36, height: 36, fontSize: 18}}>
+                  <span className="material-icons">check</span>
+                </div>
+                <div>
+                  <strong style={{display: 'block', fontSize: '13px', color: 'var(--dark)'}}>Laporan Disetujui</strong>
+                  <span style={{fontSize: '11px', color: 'var(--text-light)'}}>Tepat waktu</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="stats">
+        <div className="stats-container">
+          {content.stats?.map((stat: any, index: number) => (
+            <div 
+              key={index} 
+              className="stat-item animate-on-scroll"
+              style={{ transitionDelay: `${index * 100}ms` }}
+            >
+              <div className="stat-icon-bg">
+                <span className="material-icons stat-icon">{stat.icon}</span>
+              </div>
+              <div className="stat-value">
+                <AnimatedCounter end={stat.value} duration={2000} />
+              </div>
+              <div className="stat-label">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Solutions Section */}
+      <section id="features" className="solutions">
+        <div className="solutions-container">
+          <div className="section-header animate-on-scroll scale">
+            <span className="section-badge">
+              <span className="badge-icon">✦</span>
+              Fitur Lengkap
+            </span>
+            <h2 className="section-title">{content.solutions?.title}</h2>
+            <p className="section-subtitle">{content.solutions?.subtitle}</p>
+          </div>
+
+          <div className="solutions-grid">
+            {content.solutions?.items?.map((item: any, index: number) => (
+              <div 
+                key={index} 
+                className="solution-card animate-on-scroll"
+                style={{ transitionDelay: `${index * 100}ms` }}
+              >
+                <div className="card-inner">
+                  <div className="solution-icon">
+                    <span className="material-icons">{item.icon}</span>
+                    <div className="icon-ring"></div>
+                  </div>
+                  <h3 className="solution-title">{item.title}</h3>
+                  <p className="solution-desc">{item.description}</p>
+                  <div className="card-arrow">
+                    <span className="material-icons">arrow_forward</span>
+                  </div>
+                </div>
+                <div className="card-glow"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="benefits">
+        <div className="benefits-container">
+          <div className="benefits-content animate-on-scroll from-left">
+            <span className="section-badge">
+              <span className="badge-icon">⚡</span>
+              Keunggulan
+            </span>
+            <h2 className="section-title">{content.benefits?.title}</h2>
+            <p className="section-subtitle">{content.benefits?.subtitle}</p>
+
+            <div className="benefits-list">
+              {content.benefits?.items?.map((item: any, index: number) => (
+                <div 
+                  key={index} 
+                  className="benefit-item animate-on-scroll from-left"
+                  style={{ transitionDelay: `${index * 150}ms` }}
+                >
+                  <div className="benefit-icon">
+                    <span className="material-icons">{item.icon}</span>
+                  </div>
+                  <div className="benefit-text">
+                    <h4>{item.title}</h4>
+                    <p>{item.description}</p>
+                  </div>
+                  <div className="benefit-check">
+                    <span className="material-icons">check_circle</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="benefits-visual animate-on-scroll from-right">
+            <AnimatedPhone />
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="pricing">
+        <div className="pricing-container">
+          <div className="section-header animate-on-scroll scale">
+            <span className="section-badge">
+              <span className="badge-icon">💎</span>
+              Harga
+            </span>
+            <h2 className="section-title">{content.pricing?.title}</h2>
+            <p className="section-subtitle">{content.pricing?.subtitle}</p>
+          </div>
+
+          <div className="pricing-grid">
+            {content.pricing?.plans?.map((plan: any, index: number) => (
+              <div 
+                key={index} 
+                className={`pricing-card ${plan.popular ? 'popular' : ''} animate-on-scroll`}
+                style={{ transitionDelay: `${index * 150}ms` }}
+              >
+                {plan.popular && (
+                  <div className="popular-badge">
+                    <span className="material-icons">star</span>
+                    Paling Populer
+                  </div>
+                )}
+                <div className="pricing-header">
+                  <h3 className="plan-name">{plan.name}</h3>
+                  <p className="plan-desc">{plan.description}</p>
+                  <div className="plan-price">
+                    <span className="price">{plan.price}</span>
+                    <span className="period">{plan.period}</span>
+                  </div>
+                </div>
+                <ul className="plan-features">
+                  {plan.features?.map((feature: string, i: number) => (
+                    <li key={i}>
+                      <span className="material-icons">check_circle</span>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                <button className={`plan-cta ${plan.popular ? 'primary' : 'secondary'}`}>
+                  <span>{plan.cta}</span>
+                  <span className="material-icons">arrow_forward</span>
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section id="testimonials" className="testimonials">
+        <div className="testimonials-container">
+          <div className="section-header animate-on-scroll scale">
+            <span className="section-badge">
+              <span className="badge-icon">💬</span>
+              Testimoni
+            </span>
+            <h2 className="section-title">Apa Kata Mereka?</h2>
+            <p className="section-subtitle">Cerita sukses dari perusahaan yang telah menggunakan VORCE</p>
+          </div>
+
+          <div className="testimonials-grid">
+            {content.testimonials?.map((item: any, index: number) => (
+              <div 
+                key={index} 
+                className="testimonial-card animate-on-scroll"
+                style={{ transitionDelay: `${index * 150}ms` }}
+              >
+                <div className="testimonial-rating">
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className="material-icons">star</span>
+                  ))}
+                </div>
+                <div className="testimonial-quote">
+                  <p>"{item.quote}"</p>
+                </div>
+                <div className="testimonial-author">
+                  <div className="author-avatar">{item.avatar}</div>
+                  <div className="author-info">
+                    <strong>{item.name}</strong>
+                    <span>{item.role}</span>
+                    <span className="company">{item.company}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section id="faq" className="faq">
+        <div className="faq-container">
+          <div className="section-header animate-on-scroll scale">
+            <span className="section-badge">
+              <span className="badge-icon">❓</span>
+              FAQ
+            </span>
+            <h2 className="section-title">{content.faq?.title}</h2>
+            <p className="section-subtitle">{content.faq?.subtitle}</p>
+          </div>
+
+          <div className="faq-list">
+            {content.faq?.items?.map((item: any, index: number) => (
+              <div 
+                key={index} 
+                className={`faq-item ${openFaq === index ? 'active' : ''} animate-on-scroll from-left`}
+                onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                style={{ transitionDelay: `${index * 100}ms` }}
+              >
+                <div className="faq-question">
+                  <span className="faq-number">0{index + 1}</span>
+                  <span className="faq-text">{item.question}</span>
+                  <div className="faq-toggle">
+                    <span className="material-icons">
+                      {openFaq === index ? 'remove' : 'add'}
+                    </span>
+                  </div>
+                </div>
+                <div className="faq-answer">
+                  <p>{item.answer}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="final-cta">
+        <div className="cta-bg-elements">
+          <div className="cta-blob"></div>
+          <div className="cta-grid"></div>
+        </div>
+        <div className="cta-container">
+          <h2 className="cta-title animate-on-scroll scale">{content.cta?.title}</h2>
+          <p className="cta-subtitle animate-on-scroll scale" style={{transitionDelay: '100ms'}}>{content.cta?.subtitle}</p>
+          <a href="#pricing" className="cta-button animate-on-scroll scale" style={{transitionDelay: '200ms'}}>
+            <span className="material-icons">rocket_launch</span>
+            <span>{content.cta?.button}</span>
+            <div className="btn-particles">
+              <span></span><span></span><span></span>
+            </div>
+          </a>
+          <p className="cta-note animate-on-scroll scale" style={{transitionDelay: '300ms'}}>{content.cta?.note}</p>
+        </div>
+      </section>
 
       {/* Footer */}
-      <Footer 
-        onSignUpClick={openSignUpModal} 
-        content={content?.footer}
-      />
+      <footer className="footer">
+        <div className="footer-container">
+          <div className="footer-main">
+            <div className="footer-brand animate-on-scroll from-left">
+              <div className="footer-logo">
+                <div className="logo-container" style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                    <rect width="40" height="40" rx="10" fill="#6366f1"/>
+                    <path d="M13.5 15L19.5 27L26.5 19" stroke="white" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="29" cy="13.5" r="4" fill="#f97316"/>
+                  </svg>
+                  <span className="logo-text" style={{fontSize: '24px', fontWeight: '800', letterSpacing: '-0.5px', color: '#ffffff'}}>Vorce</span>
+                </div>
+              </div>
+              <p>{content.footer?.description}</p>
+              <div className="footer-social">
+                <a href="#" aria-label="LinkedIn"><span className="material-icons">language</span></a>
+                <a href="#" aria-label="Twitter"><span className="material-icons">alternate_email</span></a>
+                <a href="#" aria-label="Instagram"><span className="material-icons">photo_camera</span></a>
+              </div>
+            </div>
 
-      {/* Modals */}
-      <ContactModal isOpen={isContactModalOpen} onClose={closeContactModal} />
-      <SignUpModal isOpen={isSignUpModalOpen} onClose={closeSignUpModal} />
+            <div className="footer-links">
+              <div className="footer-column animate-on-scroll from-right" style={{transitionDelay: '100ms'}}>
+                <h4>Produk</h4>
+                {content.footer?.links?.product?.map((link: string, i: number) => (
+                  <a key={i} href="#">{link}</a>
+                ))}
+              </div>
+              <div className="footer-column animate-on-scroll from-right" style={{transitionDelay: '200ms'}}>
+                <h4>Perusahaan</h4>
+                {content.footer?.links?.company?.map((link: string, i: number) => (
+                  <a key={i} href="#">{link}</a>
+                ))}
+              </div>
+              <div className="footer-column animate-on-scroll from-right" style={{transitionDelay: '300ms'}}>
+                <h4>Support</h4>
+                {content.footer?.links?.support?.map((link: string, i: number) => (
+                  <a key={i} href="#">{link}</a>
+                ))}
+              </div>
+              <div className="footer-column animate-on-scroll from-right" style={{transitionDelay: '400ms'}}>
+                <h4>Legal</h4>
+                {content.footer?.links?.legal?.map((link: string, i: number) => (
+                  <a key={i} href="#">{link}</a>
+                ))}
+              </div>
+            </div>
+          </div>
 
-      {/* Floating Buttons */}
-      <ScrollToTop />
-      <WhatsAppButton />
-    </>
+          <div className="footer-bottom">
+            <p>{content.footer?.copyright}</p>
+            <div className="footer-badges">
+              <span>🔒 SSL Secured</span>
+              <span>🇮🇩 Made in Indonesia</span>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      {/* Back to Top Button */}
+      <button 
+        className={`back-to-top ${scrolled ? 'visible' : ''}`}
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      >
+        <span className="material-icons">keyboard_arrow_up</span>
+      </button>
+    </div>
   );
 }

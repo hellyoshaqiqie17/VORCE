@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "VORCE | Platform Manajemen Bisnis All-in-One",
+  title: "Vorce | Platform Manajemen Bisnis All-in-One",
   description: "Kelola seluruh operasional bisnis Anda dalam satu platform. Dari absensi karyawan hingga pengelolaan aset perusahaan.",
-  keywords: "VORCE, manajemen bisnis, HR software, absensi, task management, Indonesia",
-  authors: [{ name: "VORCE" }],
+  keywords: "Vorce, manajemen bisnis, HR software, absensi, task management, Indonesia",
+  authors: [{ name: "Vorce" }],
 };
 
 export default function RootLayout({
@@ -29,7 +29,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
         {/* Favicon */}
-        <link rel="icon" href="/next.svg" type="image/svg+xml" />
+        <link rel="icon" href="/assets/uploads/1768209897559_vorce.svg" type="image/svg+xml" />
       </head>
       <body suppressHydrationWarning>
         {children}

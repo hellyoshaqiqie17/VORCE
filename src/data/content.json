@@ -12,7 +12,7 @@
   "hero": {
     "badge": "Platform #1 Manajemen Bisnis di Indonesia",
     "title": "Kelola Seluruh Operasional Bisnis dalam Satu Platform",
-    "subtitle": "Dari absensi karyawan hingga pengelolaan aset perusahaan. VORCE menyederhanakan kompleksitas bisnis Anda dengan solusi terintegrasi yang powerful.",
+    "subtitle": "Dari absensi karyawan hingga pengelolaan aset perusahaan. Vorce menyederhanakan kompleksitas bisnis Anda dengan solusi terintegrasi yang powerful.",
     "ctaPrimary": "Mulai dengan Vorce",
     "ctaPrimaryLink": "https://wa.me/6281234567890?text=Halo%20Vorce,%20saya%20ingin%20memulai%20dengan%20Vorce",
     "ctaSecondary": "Lihat Demo",
@@ -61,7 +61,7 @@
     ]
   },
   "benefits": {
-    "title": "Mengapa 500+ Perusahaan Memilih VORCE?",
+    "title": "Mengapa 500+ Perusahaan Memilih Vorce?",
     "subtitle": "Kami tidak hanya menyediakan tools, tapi solusi yang mengubah cara Anda bekerja",
     "image": "/assets/images/features/dashboard-preview.png",
     "items": [
@@ -167,7 +167,7 @@
   },
   "testimonials": [
     {
-      "quote": "VORCE mengubah cara kami mengelola tim remote. Absensi GPS dan task tracking-nya sangat membantu produktivitas.",
+      "quote": "Vorce mengubah cara kami mengelola tim remote. Absensi GPS dan task tracking-nya sangat membantu produktivitas.",
       "name": "Rina Wijaya",
       "role": "HR Director",
       "company": "PT Teknologi Maju",
@@ -190,19 +190,19 @@
   ],
   "faq": {
     "title": "Pertanyaan yang Sering Diajukan",
-    "subtitle": "Temukan jawaban untuk pertanyaan umum tentang VORCE",
+    "subtitle": "Temukan jawaban untuk pertanyaan umum tentang Vorce",
     "items": [
       {
         "question": "Apakah ada biaya setup atau implementasi?",
-        "answer": "Tidak ada biaya setup. Anda bisa langsung mendaftar dan mulai menggunakan VORCE dalam hitungan menit. Untuk paket Enterprise, kami menyediakan training dan onboarding gratis."
+        "answer": "Tidak ada biaya setup. Anda bisa langsung mendaftar dan mulai menggunakan Vorce dalam hitungan menit. Untuk paket Enterprise, kami menyediakan training dan onboarding gratis."
       },
       {
-        "question": "Bagaimana sistem keamanan data di VORCE?",
+        "question": "Bagaimana sistem keamanan data di Vorce?",
         "answer": "Kami menggunakan enkripsi AES-256 untuk data at rest dan TLS 1.3 untuk data in transit. Server kami berlokasi di Indonesia dengan backup harian dan disaster recovery plan."
       },
       {
-        "question": "Bisakah VORCE diintegrasikan dengan sistem yang sudah ada?",
-        "answer": "Ya! VORCE menyediakan REST API dan webhook untuk integrasi dengan sistem HR, payroll, atau ERP yang sudah Anda gunakan. Kami juga memiliki integrasi native dengan Google Workspace dan Slack."
+        "question": "Bisakah Vorce diintegrasikan dengan sistem yang sudah ada?",
+        "answer": "Ya! Vorce menyediakan REST API dan webhook untuk integrasi dengan sistem HR, payroll, atau ERP yang sudah Anda gunakan. Kami juga memiliki integrasi native dengan Google Workspace dan Slack."
       },
       {
         "question": "Apakah bisa request fitur custom?",
@@ -216,14 +216,14 @@
   },
   "cta": {
     "title": "Siap Transformasi Bisnis Anda?",
-    "subtitle": "Bergabung dengan 500+ perusahaan yang sudah merasakan kemudahan mengelola bisnis dengan VORCE",
+    "subtitle": "Bergabung dengan 500+ perusahaan yang sudah merasakan kemudahan mengelola bisnis dengan Vorce",
     "button": "Mulai Gratis Sekarang",
     "buttonLink": "https://wa.me/6281234567890?text=Halo%20Vorce,%20saya%20siap%20transformasi%20bisnis",
     "note": "Tidak perlu kartu kredit • Setup 5 menit • Cancel kapan saja"
   },
   "footer": {
     "description": "Platform manajemen bisnis all-in-one untuk perusahaan modern Indonesia.",
-    "copyright": "© 2024 VORCE. All rights reserved.",
+    "copyright": "© 2024 Vorce. All rights reserved.",
     "links": {
       "product": ["Fitur", "Harga", "Integrasi", "API Docs"],
       "company": ["Tentang Kami", "Karir", "Blog", "Press Kit"],

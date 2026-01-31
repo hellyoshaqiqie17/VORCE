@@ -2426,14 +2426,28 @@ p {
 .hero-animate.delay-5 { animation-delay: 0.5s; }
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
+
+/* Admin Dashboard Grids */
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.admin-content-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 16px;
+}
+
 /* Mobile Adjustments for Dashboard & Phone */
 @media (max-width: 768px) {
   .admin-ui-composition {
-    transform: scale(0.6);
+    transform: scale(0.4);
     transform-origin: top center;
-    margin-bottom: -200px;
-    width: 166%; /* 100 / 0.6 */
-    margin-left: -33%;
+    margin-bottom: -300px;
+    width: 250%; /* 100 / 0.4 */
+    margin-left: -75%; /* (100 - 250) / 2 */
   }
   .svg-phone-container {
     transform: scale(0.7) !important;

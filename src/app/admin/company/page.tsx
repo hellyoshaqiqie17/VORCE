@@ -53,14 +53,14 @@ export default function CompanyPage() {
   const settingsItems = [
     {
       icon: "help",
-      label: "Tentang VORCE",
+      label: "Tentang Vorce",
       description: "Pelajari tentang aplikasi",
       external: true,
       href: "https://vorce.id",
     },
     {
       icon: "policy",
-      label: "Kebijakan VORCE",
+      label: "Kebijakan Vorce",
       description: "Syarat dan ketentuan",
       external: true,
       href: "#",

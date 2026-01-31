@@ -369,7 +369,7 @@ export default function Home() {
               </div>
 
               {/* Stats Row */}
-              <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '24px'}}>
+              <div className="admin-stats-grid">
                 <div className="admin-card admin-stat-card">
                   <div className="admin-icon blue">
                     <span className="material-icons">people</span>
@@ -400,7 +400,7 @@ export default function Home() {
               </div>
 
               {/* Content Grid */}
-              <div style={{display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '16px'}}>
+              <div className="admin-content-grid">
                 {/* Activity Feed */}
                 <div className="admin-card" style={{padding: '16px'}}>
                   <h4 style={{fontSize: '14px', margin: '0 0 12px 0', color: 'var(--dark)'}}>Aktivitas Terbaru</h4>

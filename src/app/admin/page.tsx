@@ -54,7 +54,7 @@ export default function AdminLogin() {
               height={48}
               style={{ objectFit: 'contain' }}
             />
-            <span style={{ fontSize: '24px', fontWeight: '800', letterSpacing: '-0.5px' }}>VORCE</span>
+            <span style={{ fontSize: '24px', fontWeight: '800', letterSpacing: '-0.5px' }}>Vorce</span>
           </div>
           <h1 style={{ marginTop: '1rem' }}>Admin Panel</h1>
           <p>Masuk untuk mengakses dashboard</p>
